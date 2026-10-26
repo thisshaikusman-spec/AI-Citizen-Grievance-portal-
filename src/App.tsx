@@ -3,21 +3,22 @@ import { GrievanceProvider, useGrievance } from './context/GrievanceContext.tsx'
 import { AnimationProvider } from './context/AnimationContext.tsx';
 import { isEnvMissing, missingEnvVars, EnvErrorScreen } from './lib/env.ts';
 import SplitFlapIntro from './components/SplitFlapIntro.tsx';
+import { Suspense, lazy } from 'react';
 
 
 import { AppBackground } from './components/layout/AppBackground.tsx';
 import { AuthLayout } from './layouts/AuthLayout.tsx';
 import { LoginView } from './components/auth/LoginView.tsx';
 import { RegisterView } from './components/auth/RegisterView.tsx';
-import { AdminView } from './components/AdminView.tsx';
+const AdminView = lazy(() => import('./components/AdminView.tsx'));
 import { Header } from './components/Header.tsx';
 import { Footer } from './components/Footer.tsx';
-import { HomeView } from './components/HomeView.tsx';
-import { TrackView } from './components/TrackView.tsx';
-import { SubmitComplaintView } from './components/SubmitComplaintView.tsx';
-import { DepartmentsView } from './components/DepartmentsView.tsx';
-import { HowItWorksView } from './components/HowItWorksView.tsx';
-import { CitizenProfileView } from './components/CitizenProfileView.tsx';
+const HomeView = lazy(() => import('./components/HomeView.tsx'));
+const TrackView = lazy(() => import('./components/TrackView.tsx'));
+const SubmitComplaintView = lazy(() => import('./components/SubmitComplaintView.tsx'));
+const DepartmentsView = lazy(() => import('./components/DepartmentsView.tsx'));
+const HowItWorksView = lazy(() => import('./components/HowItWorksView.tsx').then(module => ({ default: module.HowItWorksView })));
+const CitizenProfileView = lazy(() => import('./components/CitizenProfileView.tsx'));
 import { NotificationsModal } from './components/NotificationsModal.tsx';
 // import { WelcomeScreen } from './components/WelcomeScreen.tsx'; // Replaced by SplitFlapIntro
 
@@ -153,12 +154,12 @@ const MainAppContent: React.FC = () => {
 
       <main className="w-full pt-16 min-h-[calc(100vh-140px)] flex flex-col relative z-10">
         {(activeTab === 'home' || currentPath === '/') && <HomeView />}
-        {(activeTab === 'track-complaint' || currentPath === '/track-complaint') && <TrackView />}
-        {(activeTab === 'submit-complaint' || currentPath === '/submit-complaint') && <SubmitComplaintView />}
-        {(activeTab === 'departments' || currentPath === '/departments') && <DepartmentsView />}
-        {(activeTab === 'how-it-works' || currentPath === '/how-it-works') && <HowItWorksView />}
-        {(activeTab === 'profile' || currentPath === '/dashboard') && <CitizenProfileView />}
-        {(activeTab === 'admin' || currentPath === '/admin' || currentPath === '/officer-info') && <AdminView />}
+        {(activeTab === 'track-complaint' || currentPath === '/track-complaint') && <Suspense fallback={<div>Loading...</div>}><TrackView /></Suspense>}
+        {(activeTab === 'submit-complaint' || currentPath === '/submit-complaint') && <Suspense fallback={<div>Loading...</div>}><SubmitComplaintView /></Suspense>}
+        {(activeTab === 'departments' || currentPath === '/departments') && <Suspense fallback={<div>Loading...</div>}><DepartmentsView /></Suspense>}
+        {(activeTab === 'how-it-works' || currentPath === '/how-it-works') && <Suspense fallback={<div>Loading...</div>}><HowItWorksView /></Suspense>}
+        {(activeTab === 'profile' || currentPath === '/dashboard') && <Suspense fallback={<div>Loading...</div>}><CitizenProfileView /></Suspense>}
+        {(activeTab === 'admin' || currentPath === '/admin' || currentPath === '/officer-info') && <Suspense fallback={<div>Loading...</div>}><AdminView /></Suspense>}
         <NotificationsModal />
       </main>
 
