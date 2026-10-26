@@ -1,0 +1,59 @@
+/* SplitFlapIntro.css */
+
+/* Full‑screen dark navy background */
+.splitflap-intro {
+  position: fixed;
+  inset: 0;
+  background: #0a0e2d; /* deep navy */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e0e7ff; /* light accent */
+  z-index: 9999;
+}
+
+/* Subtle blue glow effect */
+.splitflap-intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(30, 100, 255, 0.15), transparent);
+  pointer-events: none;
+}
+
+/* Centered container for the split‑flap component */
+.splitflap-container {
+  margin-bottom: 2rem;
+}
+
+/* Fade‑out transition when the intro ends */
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+/* Skip button – minimal, accessible */
+.skip-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e0e7ff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.skip-button:hover,
+.skip-button:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #5c7dff;
+}
+
+/* Reduce motion – if user prefers, skip animation (show static title) */
+@media (prefers-reduced-motion: reduce) {
+  .splitflap-intro .splitflap-container {
+    animation: none !important;
+  }
+}

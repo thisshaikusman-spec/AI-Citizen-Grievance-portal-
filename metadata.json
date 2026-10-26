@@ -1,0 +1,6 @@
+{
+  "name": "Citizen Grievance Portal",
+  "description": "AI-powered citizen grievance redressal and election integrity monitoring portal with automated triage, SLA tracking, and ward-level routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
